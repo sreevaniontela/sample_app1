@@ -39,7 +39,7 @@ pipeline{
         }
         stage("run conatiner"){
             steps{
-                sh 'docker container run -d --name speed -p 8081:8080 ${image_name}:${image_tag}'
+                sh 'docker container run -d --name speed -p 8082:8080 ${image_name}:${image_tag}'
             }
         }
     }
