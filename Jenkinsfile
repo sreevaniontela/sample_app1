@@ -5,7 +5,7 @@ pipeline{
     }
     environment{
         image_name = 'gopi1996/speed'
-        image_tag = '${env.BUILD_NUMBER}'
+        image_tag = ${env.BUILD_NUMBER}
     }
     stages{
         stage("git checkout"){
