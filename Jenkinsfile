@@ -3,6 +3,10 @@ pipeline{
     tools{
         maven 'maven1'
     }
+    environment{
+        image_name = 'gopi1996/speed'
+        image_tag = '${env.BUILD_NUMBER}'
+    }
     stages{
         stage("git checkout"){
             steps{
@@ -16,7 +20,7 @@ pipeline{
         }
         stage("build docker image"){
             steps{
-                sh 'docker image build -t gopi1996/speed:4.0 .'
+                sh 'docker image build -t ${image_name}:${image_tag} .'
             }
         }
         stage("log in  dockerhub"){
@@ -30,7 +34,7 @@ pipeline{
         }
         stage("docker push"){
             steps{
-                sh 'docker push gopi1996/speed:4.0'
+                sh 'docker push ${image_name}:${image_tag}'
             }
         }
     }
