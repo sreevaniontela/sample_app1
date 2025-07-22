@@ -20,7 +20,7 @@ pipeline{
         }
         stage("build docker image"){
             steps{
-                sh 'docker image build -t ${image_name}:${env.image_tag} .'
+                sh 'docker image build -t ${image_name}:${image_tag} .'
             }
         }
         stage("log in  dockerhub"){
