@@ -5,7 +5,7 @@ pipeline{
     }
     environment{
         image_name = 'gopi1996/speed'
-        image_tag = '${BUILD_NUMBER}'
+        image_tag = "${env.BUILD_NUMBER}"
     }
     stages{
         stage("git checkout"){
@@ -20,7 +20,7 @@ pipeline{
         }
         stage("build docker image"){
             steps{
-                sh 'docker image build -t ${image_name}:${image_tag} .'
+                sh 'docker image build -t ${image_name}:${env.image_tag} .'
             }
         }
         stage("log in  dockerhub"){
