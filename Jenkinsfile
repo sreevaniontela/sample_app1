@@ -37,5 +37,10 @@ pipeline{
                 sh 'docker push ${image_name}:${image_tag}'
             }
         }
+        stage("run conatiner"){
+            steps{
+                sh 'docker container run -d --name speed -p 8080:8081 ${image_name}:${image_tag}'
+            }
+        }
     }
 }
