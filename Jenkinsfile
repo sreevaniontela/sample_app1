@@ -18,6 +18,15 @@ pipeline{
                 sh 'mvn clean verify'
             }
         }
+        stage("sonar scan"){
+            steps{
+                script{
+                    withSonarQubeEnv(credentialsId: 'sonar-token') {
+                       sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
         stage("build docker image"){
             steps{
                 sh 'docker image build -t ${image_name}:${image_tag} .'
@@ -30,16 +39,6 @@ pipeline{
                         sh 'docker login -u ${username} -p ${password}'
                     }
                 }
-            }
-        }
-        stage("docker push"){
-            steps{
-                sh 'docker push ${image_name}:${image_tag}'
-            }
-        }
-        stage("run conatiner"){
-            steps{
-                sh 'docker container run -d --name speed2 -p 8084:8080 ${image_name}:${image_tag}'
             }
         }
     }
