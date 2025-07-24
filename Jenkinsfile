@@ -13,18 +13,18 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/gopi720/sailor1.git'
             }
         }
-        stage("sonarscanner"){
+        stage("build"){
+            steps{
+                sh 'mvn clean verify'
+            }
+        }
+         stage("sonarscanner"){
             steps{
                 script{
                    withSonarQubeEnv(credentialsId: 'sonar-token') {
                       sh 'mvn sonar:sonar'
                    } 
                 }
-            }
-        }
-        stage("build"){
-            steps{
-                sh 'mvn clean verify'
             }
         }
         stage("build docker image"){
