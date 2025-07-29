@@ -4,7 +4,7 @@ pipeline{
         maven 'maven1'
     }
     environment{
-        image_name = 'gopi1996/speed'
+        image_name = 'sreevani01/shopping-cart'
         image_tag = "${env.BUILD_NUMBER}"
     }
     stages{
