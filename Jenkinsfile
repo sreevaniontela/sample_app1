@@ -27,23 +27,14 @@ pipeline{
                 }
             }
         }
-        stage("build docker image"){
-            steps{
-                sh 'docker image build -t ${image_name}:${image_tag} .'
-            }
-        }
-        stage("log in  dockerhub"){
+        stage("build and push"){
             steps{
                 script{
-                    withCredentials([string(credentialsId: 'username1', variable: 'username'), string(credentialsId: 'password1', variable: 'password')]) {
-                        sh 'docker login -u ${username} -p ${password}'
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
+                        sh 'docker build -t ${image_name}:${image_tag} .'
+                        sh 'docker push ${image_name}:${image_tag}'
                     }
                 }
-            }
-        }
-        stage("docker push"){
-            steps{
-                sh "docker image push ${image_name}:${image_tag}"
             }
         }
         stage("run container"){
